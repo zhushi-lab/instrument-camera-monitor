@@ -1,0 +1,28 @@
+# Release output and generated binaries. Build these from the Swift source.
+dist/
+CameraCapture
+CaptureMenu
+GridPicker
+InstrumentOCR
+MailSecret
+RegionPicker
+*.app/
+
+# Earlier prototypes are retained locally but are not part of this release.
+CameraCapture.swift
+GridPicker.swift
+每秒拍照App的构建与使用.md
+
+# Local run data, credentials and Python caches.
+__pycache__/
+*.py[cod]
+mail_settings.json
+photo_settings.json
+capture.log
+monitor.log
+recognition.csv
+IMG-*.jpg
+
+# Only the selected icon is needed to build the public source tree.
+assets/icon-concepts/*
+!assets/icon-concepts/03-frame-sequence.png
