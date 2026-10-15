@@ -36,10 +36,10 @@ macOS 菜单栏定时拍照 App。可只保存照片，也可框选照片中的�
 
 ```bash
 cd camera-automator
-./build.sh
+bash build.sh
 ```
 
-构建产物位于 `dist/arm64/每秒拍照.app` 和 `dist/arm64/每秒拍照-macos-arm64.zip`，另有 `.sha256` 校验文件。GitHub Release 的 ZIP 使用英文文件名 `instrument-camera-monitor-macos-arm64.zip`。构建使用 ad-hoc 签名，不等于 Developer ID 签名或公证。`./install.sh` 可将构建好的 App 安装到 `~/Applications`；若目标位置已有同名 App，脚本会停止，避免覆盖。
+构建产物位于 `dist/arm64/每秒拍照.app` 和 `dist/arm64/每秒拍照-macos-arm64.zip`，另有 `.sha256` 校验文件。GitHub Release 的 ZIP 使用英文文件名 `instrument-camera-monitor-macos-arm64.zip`。构建使用 ad-hoc 签名，不等于 Developer ID 签名或公证。`bash install.sh` 可将构建好的 App 安装到 `~/Applications`；若目标位置已有同名 App，脚本会停止，避免覆盖。
 
 源码中 `AppLauncher.swift` 为原生启动器，`capture_with_imagesnap.sh` 管理拍摄，`CaptureMenu.swift` 管理菜单栏，`RegionPicker.swift` 和 `InstrumentOCR.swift` 实现框选与识别，`monitor_instrument.py` 处理提醒逻辑，`configure_mail.sh`、`MailSecret.swift`、`mail_delivery.py` 处理邮箱设置。旧版 Automator 原型和编译产物不属于公开源码。
 
