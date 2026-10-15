@@ -6,7 +6,7 @@ macOS 菜单栏定时拍照 App。可只保存照片，也可框选照片中的�
 
 - **Apple 芯片（arm64）、macOS 13 或更新版本。**发布包不包含 Intel 版本。
 - 需要 imageSnap 和 **Python 3.9 或更新版本**。App 启动时自动查找用户电脑上可用的 Python 3，不绑定开发者电脑的解释器或某个 Python 小版本；数字识别使用 macOS 自带的 Vision。尚未安装依赖时，可先安装 [Homebrew](https://brew.sh/)，再运行：`brew install imagesnap python`。
-- 从 GitHub Releases 下载 `每秒拍照-macos-arm64.zip`，解压后将 `每秒拍照.app` 拖入“应用程序”。ZIP 内也附有本说明和 MIT 许可。
+- 从 GitHub Releases 下载 `instrument-camera-monitor-macos-arm64.zip`，解压后将 `每秒拍照.app` 拖入“应用程序”。ZIP 内也附有本说明和 MIT 许可。
 - 目前没有 Apple Developer ID，发布包是临时签名，**没有经过 Apple 公证**。首次打开若被 macOS 拦截，请确认下载来源可信后，在“系统设置 → 隐私与安全性”中找到该 App 的“仍要打开”，按系统提示继续。无需关闭系统的整体安全检查。参见 [Apple 官方说明](https://support.apple.com/zh-cn/guide/mac-help/mh40617/mac)。首次使用还需允许摄像头权限。
 
 当前 ZIP **不是零依赖的即下即用包**：用户电脑上必须已有 imageSnap 和兼容的 Python 3；若已经安装，则无需重复安装 Homebrew 软件。若运行时提示找不到依赖，请检查安装路径和版本。
@@ -39,7 +39,7 @@ cd camera-automator
 ./build.sh
 ```
 
-构建产物位于 `dist/arm64/每秒拍照.app` 和 `dist/arm64/每秒拍照-macos-arm64.zip`，另有 `.sha256` 校验文件。构建使用 ad-hoc 签名，不等于 Developer ID 签名或公证。`./install.sh` 可将构建好的 App 安装到 `~/Applications`；若目标位置已有同名 App，脚本会停止，避免覆盖。
+构建产物位于 `dist/arm64/每秒拍照.app` 和 `dist/arm64/每秒拍照-macos-arm64.zip`，另有 `.sha256` 校验文件。GitHub Release 的 ZIP 使用英文文件名 `instrument-camera-monitor-macos-arm64.zip`。构建使用 ad-hoc 签名，不等于 Developer ID 签名或公证。`./install.sh` 可将构建好的 App 安装到 `~/Applications`；若目标位置已有同名 App，脚本会停止，避免覆盖。
 
 源码中 `AppLauncher.swift` 为原生启动器，`capture_with_imagesnap.sh` 管理拍摄，`CaptureMenu.swift` 管理菜单栏，`RegionPicker.swift` 和 `InstrumentOCR.swift` 实现框选与识别，`monitor_instrument.py` 处理提醒逻辑，`configure_mail.sh`、`MailSecret.swift`、`mail_delivery.py` 处理邮箱设置。旧版 Automator 原型和编译产物不属于公开源码。
 
