@@ -106,10 +106,7 @@ def main():
     log_path = args.session / "recognition.csv"
     error_path = args.session / "monitor.log"
     seq = 1
-    candidate_key = None
-    candidate_count = 0
-    out_count = 0
-    active_key = None
+    alerts_sent = 0
     retry_after = 0.0
 
     with log_path.open("w", newline="", encoding="utf-8") as log, error_path.open(
@@ -147,35 +144,23 @@ def main():
                 errors.flush()
 
             key = condition.match_key(value) if value is not None else None
-            if key is None:
-                candidate_key = None
-                candidate_count = 0
-                if value is None:
-                    out_count = 0
-                else:
-                    out_count += 1
-                    state = "outside"
-                    if out_count >= 2 and active_key is not None:
-                        active_key = None
-                        state = "rearmed"
-            else:
-                out_count = 0
+            if value is not None and key is None:
+                state = "rearmed" if alerts_sent else "outside"
+                alerts_sent = 0
+                retry_after = 0.0
+            elif key is not None:
                 state = "inside"
-                if key == candidate_key:
-                    candidate_count += 1
-                else:
-                    candidate_key = key
-                    candidate_count = 1
 
-            if key is not None and candidate_count >= 2 and key != active_key and time.monotonic() >= retry_after:
-                state = "alert"
+            if key is not None and alerts_sent < 2 and time.monotonic() >= retry_after:
+                alert_number = alerts_sent + 1
+                state = f"alert_{alert_number}"
                 subject = f"仪器读数提醒：{value:g} 命中条件"
                 body = (
                     f"时间：{stamp}\n读数：{value:g}\n"
                     f"提醒条件：{condition.describe()}\n"
                     "识别区域：启动时圈选的方框\n"
                     f"照片：{photo.name}\n"
-                    "已连续两张照片识别到同一提醒条件。"
+                    f"本次命中阶段的第 {alert_number} 次提醒（最多两次）。"
                 )
                 try:
                     sent = subprocess.run(
@@ -184,7 +169,7 @@ def main():
                         capture_output=True, text=True, timeout=45, check=False,
                     )
                     if sent.returncode == 0:
-                        active_key = key
+                        alerts_sent += 1
                     else:
                         state = "mail_failed"
                         errors.write(f"{stamp} Mail error: {sent.stderr}\n")

@@ -59,8 +59,8 @@ done
 <key>CFBundleExecutable</key><string>IntervalCamera</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleIconFile</key><string>AppIcon.icns</string>
-<key>CFBundleVersion</key><string>194</string>
-<key>CFBundleShortVersionString</key><string>1.9.4</string>
+<key>CFBundleVersion</key><string>195</string>
+<key>CFBundleShortVersionString</key><string>1.9.5</string>
 <key>CFBundleDevelopmentRegion</key><string>zh_CN</string>
 <key>LSMinimumSystemVersion</key><string>13.0</string>
 <key>LSUIElement</key><true/>
@@ -75,8 +75,8 @@ PLIST
 <key>CFBundleName</key><string>拍照菜单</string>
 <key>CFBundleExecutable</key><string>CaptureMenu</string>
 <key>CFBundlePackageType</key><string>APPL</string>
-<key>CFBundleVersion</key><string>194</string>
-<key>CFBundleShortVersionString</key><string>1.9.4</string>
+<key>CFBundleVersion</key><string>195</string>
+<key>CFBundleShortVersionString</key><string>1.9.5</string>
 <key>LSUIElement</key><true/>
 </dict></plist>
 PLIST
