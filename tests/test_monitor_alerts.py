@@ -57,21 +57,24 @@ class MonitorAlertTests(unittest.TestCase):
             return emails, states
 
     def test_single_value_rearms_after_outside(self):
-        emails, states = self.run_case("31", [31, 31, 31, None, 31, 30, 31, 31, 31])
+        emails, states = self.run_case(
+            "31", [31, 31, 31, 30, 31, 30, None, 30, 30, 31, 31, 31]
+        )
         self.assertEqual(emails, ["IMG-00001.jpg", "IMG-00002.jpg",
-                                  "IMG-00007.jpg", "IMG-00008.jpg"])
+                                  "IMG-00010.jpg", "IMG-00011.jpg"])
         self.assertEqual(states[0:3], ["alert_1", "alert_2", "inside"])
-        self.assertEqual(states[5], "rearmed")
+        self.assertEqual(states[3], "outside_pending")
+        self.assertEqual(states[7:9], ["outside_pending", "rearmed"])
 
     def test_range_treats_different_values_as_one_episode(self):
-        emails, _ = self.run_case("10~20", [10, 12, 18, 21, 19, 20, 20])
+        emails, _ = self.run_case("10~20", [10, 12, 18, 21, 19, 21, 22, 19, 20, 20])
         self.assertEqual(emails, ["IMG-00001.jpg", "IMG-00002.jpg",
-                                  "IMG-00005.jpg", "IMG-00006.jpg"])
+                                  "IMG-00008.jpg", "IMG-00009.jpg"])
 
     def test_multiple_targets_share_one_episode(self):
-        emails, _ = self.run_case("31、32", [31, 32, 31, None, 32, 40, 31])
+        emails, _ = self.run_case("31、32", [31, 32, 31, 40, 32, 40, 41, 31, 32])
         self.assertEqual(emails, ["IMG-00001.jpg", "IMG-00002.jpg",
-                                  "IMG-00007.jpg"])
+                                  "IMG-00008.jpg", "IMG-00009.jpg"])
 
 
 if __name__ == "__main__":
