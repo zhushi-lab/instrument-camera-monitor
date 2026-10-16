@@ -107,6 +107,7 @@ def main():
     error_path = args.session / "monitor.log"
     seq = 1
     alerts_sent = 0
+    outside_streak = 0
     retry_after = 0.0
 
     with log_path.open("w", newline="", encoding="utf-8") as log, error_path.open(
@@ -145,11 +146,18 @@ def main():
 
             key = condition.match_key(value) if value is not None else None
             if value is not None and key is None:
-                state = "rearmed" if alerts_sent else "outside"
-                alerts_sent = 0
-                retry_after = 0.0
+                outside_streak += 1
+                state = "outside_pending" if alerts_sent else "outside"
+                if outside_streak >= 2:
+                    if alerts_sent:
+                        state = "rearmed"
+                    alerts_sent = 0
+                    retry_after = 0.0
             elif key is not None:
+                outside_streak = 0
                 state = "inside"
+            else:
+                outside_streak = 0
 
             if key is not None and alerts_sent < 2 and time.monotonic() >= retry_after:
                 alert_number = alerts_sent + 1
