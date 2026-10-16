@@ -6,7 +6,7 @@
 
 - 支持 Apple 芯片、macOS 13 及以上；暂无 Intel 版本。
 - 需要 imageSnap 和 Python 3.9 及以上。App 会自动查找本机兼容的 Python 3；数字识别使用 macOS Vision。可用 [Homebrew](https://brew.sh/) 安装依赖：`brew install imagesnap python`。
-- 从 [Releases](https://github.com/yushaofen241/instrument-camera-monitor/releases) 下载 `instrument-camera-monitor-macos-arm64.zip`，解压后将 `每秒拍照.app` 移入“应用程序”。下载包**未经过 Apple 公证**；首次打开若被拦截，可按 [Apple 的说明](https://support.apple.com/zh-cn/guide/mac-help/mh40617/mac) 在“隐私与安全性”中允许打开，并授予摄像头权限。
+- 从 [Releases](https://github.com/zhushi-lab/instrument-camera-monitor/releases) 下载 `instrument-camera-monitor-macos-arm64.zip`，解压后将 `每秒拍照.app` 移入“应用程序”。下载包**未经过 Apple 公证**；首次打开若被拦截，可按 [Apple 的说明](https://support.apple.com/zh-cn/guide/mac-help/mh40617/mac) 在“隐私与安全性”中允许打开，并授予摄像头权限。
 
 ## 使用
 
